@@ -1,6 +1,7 @@
 "use client";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
+import AppBar from "~/src/components/appBar";
 import { useAuth } from "~/src/contexts/authProvider";
 import { LoginForm } from "~/src/modules/login/components/form";
 
@@ -13,6 +14,7 @@ export default function LoginPage() {
 
   return (
     <>
+      <AppBar />
       <main className="min-h-screen flex items-center justify-center">
         <div>
           <div className="bg-gray-800 p-10 rounded-lg shadow-lg shadow-slate-700 w-96">
