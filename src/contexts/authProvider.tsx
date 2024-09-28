@@ -14,6 +14,7 @@ import { isEmpty } from "../utils/isEmpty";
 import { SignUpRequest } from "../models/request/signup";
 import { handleSignUpUser } from "../modules/signup/logic/handler";
 import useLocalStorage from "../hooks/useLocalStorage";
+import Loading from "../app/loading";
 
 interface AuthContextProvider {
   loading: boolean;
@@ -50,6 +51,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isAuth, setIsAuth] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [delayEnd, setDelayEnd] = useState(false);
   const logout = () => {
     setUser(null);
     setToken("");
@@ -94,6 +96,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (!isEmpty(token)) setIsAuth(true);
+    const timeoutId = setTimeout(() => {
+      setDelayEnd(true);
+    }, 1200);
+    return () => clearTimeout(timeoutId);
   }, [token]);
 
   return (
@@ -109,7 +115,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         signUp,
       }}
     >
-      {children}
+      {delayEnd ? children : <Loading />}
     </AuthContext.Provider>
   );
 };
