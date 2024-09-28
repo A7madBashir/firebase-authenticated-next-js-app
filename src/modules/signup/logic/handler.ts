@@ -1,14 +1,14 @@
-import { LoginRequest } from "@/models/request/login";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "~/src/lib/firebase/config";
 import { AuthUserState } from "~/src/models/DTO/authState";
+import { SignUpRequest } from "~/src/models/request/signup";
 
-export async function handleLoginUser({
+export async function handleSignUpUser({
   email,
   password,
-}: LoginRequest): Promise<AuthUserState | undefined> {
+}: SignUpRequest): Promise<AuthUserState | undefined> {
   try {
-    const res = await signInWithEmailAndPassword(auth, email, password);
+    const res = await createUserWithEmailAndPassword(auth, email, password);
 
     return {
       user: res.user,
